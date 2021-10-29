@@ -1,4 +1,4 @@
 __pycache__
-src/model/*
+model/*
 
 !.gitkeep

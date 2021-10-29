@@ -2,14 +2,11 @@ from pathlib import Path
 from typing import Dict, List
 from xml.sax.saxutils import unescape
 
+import time
 import emoji
 import mojimoji
-from transformers import T5TokenizerFast, T5ForConditionalGeneration
-
-
-model_path = Path(__file__).parent / 'model/'
-tokenizer = T5TokenizerFast.from_pretrained(model_path)
-model = T5ForConditionalGeneration.from_pretrained(model_path)
+from src.arai_model import make_arai_reply
+from src.t5_model import make_t5_reply
 
 
 def make_reply(input_text: str) -> List[Dict[str, str]]:
@@ -25,18 +22,11 @@ def make_reply(input_text: str) -> List[Dict[str, str]]:
     outputs : List[Dict[str, str]]
     """
     input_text = replace_func(input_text)
-    input_ids = tokenizer(input_text, return_tensors='pt').input_ids
-    outputs = model.generate(
-        input_ids, 
-        max_length=20,
-        num_beams=4,
-        repetition_penalty=1.2, 
-        num_return_sequences=3, 
-        num_beam_groups=4,
-        diversity_penalty=3.0
-    )
-    outputs = tokenizer.batch_decode(outputs, skip_special_tokens=True)
-    return [{"reply_text": output} for output in outputs]
+    reply1 = make_t5_reply(input_text)
+    #time.sleep(3)
+    #reply2 = make_arai_reply([[input_text]])
+    return reply1
+    #return reply1 + reply2
 
 
 def replace_func(text: str) -> str:

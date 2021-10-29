@@ -1,0 +1,11 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[packages]
+fairseq = {git = "https://github.com/utanaka2000/fairseq.git", editable = true, ref = "japanese_bart_pretrained_model"}
+zenhan = "*"
+pyknp = "*"
+sentencepiece = "*"
+tensorboardX = "*"

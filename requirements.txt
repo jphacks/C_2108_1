@@ -1,7 +1,10 @@
 uvicorn
 fastapi
 pydantic
+pyknp
+sentencepiece
 emoji==0.5.2
+zenhan==0.5.2
 mojimoji==0.0.11
 torch==1.10.0
 transformers==4.12.0
